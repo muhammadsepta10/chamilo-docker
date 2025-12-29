@@ -1,0 +1,45 @@
+services:
+  chamilo_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chamilo_app
+    ports:
+      - "1234:80"
+    volumes:
+      - ./chamilo:/var/www/html
+      - courses_data:/var/www/html/app/courses
+      - cache_data:/var/www/html/app/cache
+      - logs_data:/var/www/html/app/logs
+      - config_data:/var/www/html/app/config
+    depends_on:
+      - chamilo_db
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+    networks:
+      - chamilo_network
+
+  chamilo_db:
+    image: mysql:8.0
+    container_name: chamilo_db
+    environment:
+      MYSQL_DATABASE: chamilo
+      MYSQL_USER: chamilo
+      MYSQL_PASSWORD: chamilo
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - chamilo_network
+
+volumes:
+  db_data:
+  courses_data:
+  cache_data:
+  logs_data:
+  config_data:
+
+networks:
+  chamilo_network:
+    driver: bridge
+

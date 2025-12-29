@@ -1,0 +1,26 @@
+FROM bitnami/php-fpm:8.2
+
+# Apache config
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/web
+
+RUN sed -ri 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/*.conf \
+    /etc/apache2/apache2.conf
+
+RUN a2enmod rewrite
+
+# PHP extensions required by Chamilo
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    unzip \
+    git \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl pdo pdo_mysql mysqli zip gd
+
+# Increase memory
+RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory.ini
+
