@@ -14,8 +14,6 @@ services:
       - config_data:/var/www/html/app/config
     depends_on:
       - chamilo_db
-    environment:
-      - APACHE_DOCUMENT_ROOT=/var/www/html
     networks:
       - chamilo_network
 

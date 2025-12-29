@@ -45,6 +45,10 @@ RUN a2enmod rewrite headers expires
 # Configure Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+# Copy Apache virtual host configuration
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+RUN a2ensite 000-default.conf
+
 # Configure PHP settings for Chamilo
 RUN echo "display_errors = Off" >> /usr/local/etc/php/conf.d/chamilo.ini \
     && echo "short_open_tag = Off" >> /usr/local/etc/php/conf.d/chamilo.ini \

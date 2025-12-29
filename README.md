@@ -189,39 +189,60 @@ rm -rf chamilo
 
 ## 🚀 Deployment di Server Ubuntu
 
-### 1. Clone Repository
+### Untuk Development/Testing (localhost)
 
 ```bash
+# 1. Clone repository
 git clone <your-repo-url> chamilo-docker
 cd chamilo-docker
-```
 
-### 2. Install Dependencies (jika belum ada)
-
-```bash
+# 2. Install dependencies
 sudo apt-get update
 sudo apt-get install -y wget unzip
-```
 
-### 3. Install Docker (jika belum ada)
-
-```bash
+# 3. Install Docker (jika belum ada)
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker $USER
 # Logout dan login lagi setelah ini
-```
 
-### 4. Run
-
-```bash
+# 4. Run
 chmod +x start.sh setup-chamilo.sh
 ./start.sh
+
+# 5. Access
+# http://localhost:1234
 ```
 
-### 5. (Opsional) Setup Nginx Reverse Proxy
+### Untuk Production dengan Domain (lms.septadenita.my.id)
 
-Jika ingin menggunakan port 80 atau HTTPS, setup Nginx sebagai reverse proxy.
+Lihat **[DEPLOYMENT.md](DEPLOYMENT.md)** untuk panduan lengkap deployment production dengan:
+- ✅ Nginx Reverse Proxy
+- ✅ SSL Certificate (Let's Encrypt)
+- ✅ Domain Configuration
+- ✅ Security Setup
+- ✅ Backup & Restore
+
+**Quick Start Production:**
+
+```bash
+# 1. Clone dan setup
+git clone <your-repo-url> chamilo-docker
+cd chamilo-docker
+chmod +x *.sh
+./start.sh
+
+# 2. Setup Nginx Reverse Proxy
+sudo cp nginx-reverse-proxy.conf /etc/nginx/sites-available/lms.septadenita.my.id
+sudo ln -s /etc/nginx/sites-available/lms.septadenita.my.id /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# 3. Setup SSL
+sudo ./setup-ssl.sh
+
+# 4. Access
+# https://lms.septadenita.my.id
+```
 
 ## 📚 References
 
