@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y \
 # To enable Xapian PHP extension, you may need to compile it separately
 
 # Enable Apache mod_rewrite and other required modules
-RUN a2enmod rewrite headers expires
+RUN a2enmod rewrite headers expires remoteip 2>/dev/null || true
 
 # Configure Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -56,6 +56,9 @@ RUN echo "display_errors = Off" >> /usr/local/etc/php/conf.d/chamilo.ini \
     && echo "upload_max_filesize = 100M" >> /usr/local/etc/php/conf.d/chamilo.ini \
     && echo "post_max_size = 100M" >> /usr/local/etc/php/conf.d/chamilo.ini \
     && echo "memory_limit = 512M" >> /usr/local/etc/php/conf.d/chamilo.ini \
+    && echo "max_execution_time = 0" >> /usr/local/etc/php/conf.d/chamilo.ini \
+    && echo "max_input_time = 600" >> /usr/local/etc/php/conf.d/chamilo.ini \
+    && echo "default_socket_timeout = 600" >> /usr/local/etc/php/conf.d/chamilo.ini \
     && echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT" >> /usr/local/etc/php/conf.d/chamilo.ini
 
 # Set working directory

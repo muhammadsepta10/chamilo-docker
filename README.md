@@ -223,6 +223,9 @@ Lihat **[DEPLOYMENT.md](DEPLOYMENT.md)** untuk panduan lengkap deployment produc
 - ✅ Security Setup
 - ✅ Backup & Restore
 
+**Jika menggunakan Cloudflare Tunnel:**
+- Lihat **[TIMEOUT_FIX.md](TIMEOUT_FIX.md)** untuk mengatasi error 524 (timeout) saat instalasi
+
 **Quick Start Production:**
 
 ```bash
