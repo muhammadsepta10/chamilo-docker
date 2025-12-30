@@ -40,7 +40,8 @@ RUN apt-get update && apt-get install -y \
 # To enable Xapian PHP extension, you may need to compile it separately
 
 # Enable Apache mod_rewrite and other required modules
-RUN a2enmod rewrite headers expires remoteip 2>/dev/null || true
+RUN a2enmod rewrite headers expires
+RUN a2enmod remoteip 2>/dev/null || echo "Note: mod_remoteip might not be available, continuing..."
 
 # Configure Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
